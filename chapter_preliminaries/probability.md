@@ -878,7 +878,7 @@ averaging over all the possible outcomes
 For instance, say that with 50% probability,
 an investment might fail altogether,
 with 40% probability it might provide a 2$\times$ return,
-and with 10% probability it might provide a 10$\times$ return 10$\times$.
+and with 10% probability it might provide a 10$\times$ return.
 To calculate the expected return,
 we sum over all returns, multiplying each
 by the probability that they will occur.
