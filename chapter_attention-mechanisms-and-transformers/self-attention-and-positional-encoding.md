@@ -365,7 +365,7 @@ pos_encoding.initialize()
 X = pos_encoding(np.zeros((1, num_steps, encoding_dim)))
 P = pos_encoding.P[:, :X.shape[1], :]
 d2l.plot(d2l.arange(num_steps), P[0, :, 6:10].T, xlabel='Row (position)',
-         figsize=(6, 2.5), legend=["Col %d" % d for d in d2l.arange(6, 10)])
+         figsize=(6, 2.5), legend=["Col %d" % d for d in range(6, 10)])
 ```
 
 ```{.python .input}
@@ -375,7 +375,7 @@ pos_encoding = PositionalEncoding(encoding_dim, 0)
 X = pos_encoding(d2l.zeros((1, num_steps, encoding_dim)))
 P = pos_encoding.P[:, :X.shape[1], :]
 d2l.plot(d2l.arange(num_steps), P[0, :, 6:10].T, xlabel='Row (position)',
-         figsize=(6, 2.5), legend=["Col %d" % d for d in d2l.arange(6, 10)])
+         figsize=(6, 2.5), legend=["Col %d" % d for d in range(6, 10)])
 ```
 
 ```{.python .input}
@@ -385,7 +385,7 @@ pos_encoding = PositionalEncoding(encoding_dim, 0)
 X = pos_encoding(tf.zeros((1, num_steps, encoding_dim)), training=False)
 P = pos_encoding.P[:, :X.shape[1], :]
 d2l.plot(np.arange(num_steps), P[0, :, 6:10].T, xlabel='Row (position)',
-         figsize=(6, 2.5), legend=["Col %d" % d for d in np.arange(6, 10)])
+         figsize=(6, 2.5), legend=["Col %d" % d for d in range(6, 10)])
 ```
 
 ```{.python .input}
@@ -398,7 +398,7 @@ X, inter_vars = pos_encoding.apply(params, d2l.zeros((1, num_steps, encoding_dim
 P = inter_vars['intermediates']['P'][0]  # retrieve intermediate value P
 P = P[:, :X.shape[1], :]
 d2l.plot(d2l.arange(num_steps), P[0, :, 6:10].T, xlabel='Row (position)',
-         figsize=(6, 2.5), legend=["Col %d" % d for d in d2l.arange(6, 10)])
+         figsize=(6, 2.5), legend=["Col %d" % d for d in range(6, 10)])
 ```
 
 ### Absolute Positional Information
