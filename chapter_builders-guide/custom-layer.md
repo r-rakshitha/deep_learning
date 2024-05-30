@@ -204,7 +204,7 @@ class MyLinear(nn.Module):
         self.bias = nn.Parameter(torch.randn(units,))
         
     def forward(self, X):
-        linear = torch.matmul(X, self.weight.data) + self.bias.data
+        linear = torch.matmul(X, self.weight) + self.bias
         return F.relu(linear)
 ```
 
