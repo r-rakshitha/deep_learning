@@ -270,7 +270,7 @@ as its backbone :cite:`Radford.Narasimhan.Salimans.ea.2018`.
 Following the autoregressive language model training
 as described in :numref:`subsec_partitioning-seqs`,
 :numref:`fig_gpt-decoder-only` illustrates
-GPT pretraining with a Transformer encoder,
+GPT pretraining with a Transformer decoder,
 where the target sequence is the input sequence shifted by one token.
 Note that the attention pattern in the Transformer decoder
 enforces that each token can only attend to its past tokens
