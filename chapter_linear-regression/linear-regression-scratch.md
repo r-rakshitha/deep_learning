@@ -186,7 +186,7 @@ Next, we update the parameters
 in the direction that may reduce the loss.
 
 The following code applies the update, 
-given a set of parameters, a learning rate `lr`.
+given a set of parameters and a learning rate `lr`.
 Since our loss is computed as an average over the minibatch, 
 we do not need to adjust the learning rate against the batch size. 
 In later chapters we will investigate 
