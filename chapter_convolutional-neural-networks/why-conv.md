@@ -55,7 +55,7 @@ that machine learning has embraced for exploiting
 some of the known structure in natural images.
 
 
-## Invariance
+## Designing Biases
 
 Imagine that we want to detect an object in an image.
 It seems reasonable that whatever method
@@ -83,7 +83,7 @@ that could assign a score to each patch,
 indicating the likelihood that the patch contains Waldo. 
 In fact, many object detection and segmentation algorithms 
 are based on this approach :cite:`Long.Shelhamer.Darrell.2015`. 
-CNNs systematize this idea of *spatial invariance*,
+CNNs systematize this idea of *spatial invariance and equivariance*,
 exploiting it to learn useful representations
 with fewer parameters.
 
@@ -95,15 +95,16 @@ We can now make these intuitions more concrete
 by enumerating a few desiderata to guide our design
 of a neural network architecture suitable for computer vision:
 
-1. In the earliest layers, our network
-   should respond similarly to the same patch,
-   regardless of where it appears in the image. This principle is called *translation invariance* (or *translation equivariance*).
+1. When there is a shift in a patch's position within an image, the corresponding hidden representation should also shift. This principle is called *translation equivariance*. This ensures that our network effectively tracks position changes across different parts of the image.
+1. Our network should respond similarly to the same patch, regardless of where it appears in the image. This principle is called *translation invariance*. This principle is important for recognizing objects in varied locations within the scene.
 1. The earliest layers of the network should focus on local regions,
    without regard for the contents of the image in distant regions. This is the *locality* principle.
    Eventually, these local representations can be aggregated
    to make predictions at the whole image level.
 1. As we proceed, deeper layers should be able to capture longer-range features of the 
    image, in a way similar to higher level vision in nature. 
+
+These design principles can be considered as desired inductive biases that should be implemented in neural network architecture.
 
 Let's see how this translates into mathematics.
 
@@ -145,18 +146,21 @@ For any given location ($i$, $j$) in the hidden representation $[\mathbf{H}]_{i,
 we compute its value by summing over pixels in $x$,
 centered around $(i, j)$ and weighted by $[\mathsf{V}]_{i, j, a, b}$. Before we carry on, let's consider the total number of parameters required for a *single* layer in this parametrization: a $1000 \times 1000$ image (1 megapixel) is mapped to a $1000 \times 1000$ hidden representation. This requires $10^{12}$ parameters, far beyond what computers currently can handle.  
 
-### Translation Invariance
+### Translation Equivariance and Invariance
 
-Now let's invoke the first principle
-established above: translation invariance :cite:`Zhang.ea.1988`.
-This implies that a shift in the input $\mathbf{X}$
+Consider two images, each featuring a cat, and a neural network that is designed to perform a binary classification task to determine whether the image contains a cat. For such a network, a shift in the cat's position on the input image should lead to a shift in the activation peak in the hidden representation (*translation equivariance*) and should not influence the final prediction (*translation invariance*) :numref:`img_cat_invar`.
+
+![Translation equivariance and invariance.](../img/translations.png)
+:width:`400px`
+:label:`img_cat_invar`
+
+As already mentioned, translation equivariance implies that a shift in the input $\mathbf{X}$
 should simply lead to a shift in the hidden representation $\mathbf{H}$.
 This is only possible if $\mathsf{V}$ and $\mathbf{U}$ do not actually depend on $(i, j)$. As such,
 we have $[\mathsf{V}]_{i, j, a, b} = [\mathbf{V}]_{a, b}$ and $\mathbf{U}$ is a constant, say $u$.
 As a result, we can simplify the definition for $\mathbf{H}$:
 
 $$[\mathbf{H}]_{i, j} = u + \sum_a\sum_b [\mathbf{V}]_{a, b}  [\mathbf{X}]_{i+a, j+b}.$$
-
 
 This is a *convolution*!
 We are effectively weighting pixels at $(i+a, j+b)$
@@ -165,9 +169,12 @@ to obtain the value $[\mathbf{H}]_{i, j}$.
 Note that $[\mathbf{V}]_{a, b}$ needs many fewer coefficients than $[\mathsf{V}]_{i, j, a, b}$ since it
 no longer depends on the location within the image. Consequently, the number of parameters required is no longer $10^{12}$ but a much more reasonable $4 \times 10^6$: we still have the dependency on $a, b \in (-1000, 1000)$. In short, we have made significant progress. Time-delay neural networks (TDNNs) are some of the first examples to exploit this idea :cite:`Waibel.Hanazawa.Hinton.ea.1989`.
 
+As we move toward achieving translation invariance, we need to introduce additional layer that perform an operation called pooling. These layer will be discussed in more detail later (:ref:`sec_pooling`). For now, it's sufficient to understand that these layer perform operations that possess the translation invariance property.
+
+
 ###  Locality
 
-Now let's invoke the second principle: locality.
+Now let's invoke the third principle: locality.
 As motivated above, we believe that we should not have
 to look very far away from location $(i, j)$
 in order to glean relevant information
@@ -185,6 +192,7 @@ are a special family of neural networks that contain convolutional layers.
 In the deep learning research community,
 $\mathbf{V}$ is referred to as a *convolution kernel*,
 a *filter*, or simply the layer's *weights* that are learnable parameters.
+The use of trainable convolutional filters can also be considered a weight-sharing inductive bias of a network, since the same group of weights in the filter is used to identify features in any position on the image.
 
 While previously, we might have required billions of parameters
 to represent just a single layer in an image-processing network,
@@ -192,7 +200,7 @@ we now typically need just a few hundred, without
 altering the dimensionality of either
 the inputs or the hidden representations.
 The price paid for this drastic reduction in parameters
-is that our features are now translation invariant
+is that our features are now translation equivariant
 and that our layer can only incorporate local information,
 when determining the value of each hidden activation.
 All learning depends on imposing inductive bias.
@@ -200,7 +208,7 @@ When that bias agrees with reality,
 we get sample-efficient models
 that generalize well to unseen data.
 But of course, if those biases do not agree with reality,
-e.g., if images turned out not to be translation invariant,
+e.g., if images turned out not to be translation equivariant or invariant,
 our models might struggle even to fit our training data.
 
 This dramatic reduction in parameters brings us to our last desideratum, 
@@ -249,7 +257,7 @@ The convolutional layer picks windows of a given size
 and weighs intensities according to the filter $\mathsf{V}$, as demonstrated in :numref:`fig_waldo_mask`.
 We might aim to learn a model so that
 wherever the "waldoness" is highest,
-we should find a peak in the hidden layer representations.
+we should find a peak in the hidden layer representations (like in a cat classifier example :numref:`img_cat_invar`).
 
 ![Detect Waldo (image courtesy of William Murphy (Infomatique)).](../img/waldo-mask.jpg)
 :width:`400px`
@@ -311,11 +319,11 @@ We turn to these issues in the remainder of the chapter.
 
 ## Summary and Discussion
 
-In this section we derived the structure of convolutional neural networks from first principles. While it is unclear whether this was the route taken to the invention of CNNs, it is satisfying to know that they are the *right* choice when applying reasonable principles to how image processing and computer vision algorithms should operate, at least at lower levels. In particular, translation invariance in images implies that all patches of an image will be treated in the same manner. Locality means that only a small neighborhood of pixels will be used to compute the corresponding hidden representations. Some of the earliest references to CNNs are in the form of the Neocognitron :cite:`Fukushima.1982`. 
+In this section we derived the structure of convolutional neural networks from first principles. While it is unclear whether this was the route taken to the invention of CNNs, it is satisfying to know that they are the *right* choice when applying reasonable principles to how image processing and computer vision algorithms should operate, at least at lower levels. In particular, translation invariance and equivariance in images implies that all patches of an image will be treated in the same manner. Locality means that only a small neighborhood of pixels will be used to compute the corresponding hidden representations. Some of the earliest references to CNNs are in the form of the Neocognitron :cite:`Fukushima.1982`. 
 
 A second principle that we encountered in our reasoning is how to reduce the number of parameters in a function class without limiting its expressive power, at least, whenever certain assumptions on the model hold. We saw a dramatic reduction of complexity as a result of this restriction, turning computationally and statistically infeasible problems into tractable models. 
 
-Adding channels allowed us to bring back some of the complexity that was lost due to the restrictions imposed on the convolutional kernel by locality and translation invariance. Note that it is quite natural to add channels other than just red, green, and blue. Many satellite 
+Adding channels allowed us to bring back some of the complexity that was lost due to the restrictions imposed on the convolutional kernel by locality and translation equivariance. Note that it is quite natural to add channels other than just red, green, and blue. Many satellite 
 images, in particular for agriculture and meteorology, have tens to hundreds of channels, 
 generating hyperspectral images instead. They report data on many different wavelengths. In the following we will see how to use convolutions effectively to manipulate the dimensionality of the images they operate on, how to move from location-based to channel-based representations, and how to deal with large numbers of categories efficiently. 
 
@@ -329,7 +337,7 @@ generating hyperspectral images instead. They report data on many different wave
     1. When might you want to impose locality and translation invariance for audio? 
     1. Derive the convolution operations for audio.
     1. Can you treat audio using the same tools as computer vision? Hint: use the spectrogram.
-1. Why might translation invariance not be a good idea after all? Give an example. 
+1. Why might translation invariance not be a good idea after all? What about translation equivariance? Give an example. 
 1. Do you think that convolutional layers might also be applicable for text data?
    Which problems might you encounter with language?
 1. What happens with convolutions when an object is at the boundary of an image?
