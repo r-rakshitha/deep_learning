@@ -2661,7 +2661,7 @@ class HPOTuner(d2l.HyperParameters):
     """Defined in :numref:`sec_api_hpo`"""
     def __init__(self, scheduler: HPOScheduler, objective: callable):
         self.save_hyperparameters()
-        # Bookeeping results for plotting
+        # Bookkeeping results for plotting
         self.incumbent = None
         self.incumbent_error = None
         self.incumbent_trajectory = []
@@ -2814,7 +2814,7 @@ d2l.DATA_HUB['pokemon'] = (d2l.DATA_URL + 'pokemon.zip',
 def frozen_lake(seed):
     """Defined in :numref:`sec_utils`"""
     # See https://www.gymlibrary.dev/environments/toy_text/frozen_lake/ to learn more about this env
-    # How to process env.P.items is adpated from https://sites.google.com/view/deep-rl-bootcamp/labs
+    # How to process env.P.items is adapted from https://sites.google.com/view/deep-rl-bootcamp/labs
     import gym
 
     env = gym.make('FrozenLake-v1', is_slippery=False)
@@ -3199,7 +3199,7 @@ def download(url, folder='../data', sha1_hash=None):
 
     Defined in :numref:`sec_utils`"""
     if not url.startswith('http'):
-        # For back compatability
+        # For back compatibility
         url, sha1_hash = DATA_HUB[url]
     os.makedirs(folder, exist_ok=True)
     fname = os.path.join(folder, url.split('/')[-1])

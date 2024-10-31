@@ -9,7 +9,7 @@ tab.interact_select(['mxnet', 'pytorch', 'tensorflow', 'jax'])
 
 Let's think briefly about what we
 expect from a good predictive model.
-We want it to peform well on unseen data.
+We want it to perform well on unseen data.
 Classical generalization theory
 suggests that to close the gap between
 train and test performance,

@@ -315,7 +315,7 @@ tweaking the code in small ways and observing the results.
 Ideally, an elegant mathematical theory might tell us
 precisely how to tweak our code to achieve a desired result.
 However, deep learning practitioners today
-must often tread where no solid theory provides guidance.
+must often thread where no solid theory provides guidance.
 Despite our best attempts, formal explanations
 for the efficacy of various techniques are
 still lacking, for a variety of reasons: the mathematics to characterize these models
@@ -421,7 +421,7 @@ Below lists dependencies in our TensorFlow implementation.
 Most of the code in this book is based on Jax,
 an open-source framework enabling composable function
 transformations such as differentiation of arbitrary
-Python and NumPy functions, as well as JIT compliation,
+Python and NumPy functions, as well as JIT compilation,
 vectorization and much more! It is becoming popular in
 the machine learning research space and has an
 easy-to-learn NumPy-like API. Actually, JAX tries

@@ -445,7 +445,7 @@ net_D = tf.keras.Sequential([
     D_block(n_D), # Output: (32, 32, 64)
     D_block(out_channels=n_D*2), # Output: (16, 16, 64 * 2)
     D_block(out_channels=n_D*4), # Output: (8, 8, 64 * 4)
-    D_block(out_channels=n_D*8), # Outupt: (4, 4, 64 * 64)
+    D_block(out_channels=n_D*8), # Output: (4, 4, 64 * 64)
     # Output: (1, 1, 1)
     tf.keras.layers.Conv2D(1, kernel_size=4, use_bias=False)
 ])

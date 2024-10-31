@@ -108,13 +108,13 @@ def draw(self, x, y, label, every_n=1):
     display.clear_output(wait=True)
 ```
 
-Add FrozenLake enviroment
+Add FrozenLake environment
 ```{.python .input}
 %%tab pytorch
 
 def frozen_lake(seed): #@save
     # See https://www.gymlibrary.dev/environments/toy_text/frozen_lake/ to learn more about this env
-    # How to process env.P.items is adpated from https://sites.google.com/view/deep-rl-bootcamp/labs
+    # How to process env.P.items is adapted from https://sites.google.com/view/deep-rl-bootcamp/labs
     import gym
 
     env = gym.make('FrozenLake-v1', is_slippery=False)
@@ -145,7 +145,7 @@ def frozen_lake(seed): #@save
 
 ```
 
-Create enviroment
+Create environment
 ```{.python .input}
 %%tab pytorch
 
@@ -707,7 +707,7 @@ import hashlib
 def download(url, folder='../data', sha1_hash=None):  #@save
     """Download a file to folder and return the local filepath."""
     if not url.startswith('http'):
-        # For back compatability
+        # For back compatibility
         url, sha1_hash = DATA_HUB[url]
     os.makedirs(folder, exist_ok=True)
     fname = os.path.join(folder, url.split('/')[-1])
