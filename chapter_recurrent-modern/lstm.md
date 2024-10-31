@@ -520,7 +520,7 @@ they rose to great prominence
 with some victories in prediction competitions in the mid-2000s,
 and became the dominant models for sequence learning from 2011 
 until the rise of Transformer models, starting in 2017.
-Even Tranformers owe some of their key ideas 
+Even Transformers owe some of their key ideas 
 to architecture design innovations introduced by the LSTM.
 
 

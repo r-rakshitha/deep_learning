@@ -703,7 +703,7 @@ are chosen to minimize squared loss on the training set.
 We also motivated this choice of objective
 both via some practical considerations
 and through an interpretation
-of linear regression as maximimum likelihood estimation
+of linear regression as maximum likelihood estimation
 under an assumption of linearity and Gaussian noise.
 After discussing both computational considerations
 and connections to statistics,

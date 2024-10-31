@@ -148,7 +148,7 @@ the first consisting mostly of convolutional and pooling layers
 and the second consisting of fully connected layers that are identical to those in AlexNet. 
 The key difference is 
 that the convolutional layers are grouped in nonlinear transformations that 
-leave the dimensonality unchanged, followed by a resolution-reduction step, as 
+leave the dimensionality unchanged, followed by a resolution-reduction step, as 
 depicted in :numref:`fig_vgg`. 
 
 ![From AlexNet to VGG. The key difference is that VGG consists of blocks of layers, whereas AlexNet's layers are all designed individually.](../img/vgg.svg)

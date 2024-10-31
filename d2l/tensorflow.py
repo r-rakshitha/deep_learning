@@ -1695,7 +1695,7 @@ def download(url, folder='../data', sha1_hash=None):
 
     Defined in :numref:`sec_utils`"""
     if not url.startswith('http'):
-        # For back compatability
+        # For back compatibility
         url, sha1_hash = DATA_HUB[url]
     os.makedirs(folder, exist_ok=True)
     fname = os.path.join(folder, url.split('/')[-1])

@@ -124,7 +124,7 @@ distributed HPO cases.
 class HPOTuner(d2l.HyperParameters):  #@save
     def __init__(self, scheduler: HPOScheduler, objective: callable):
         self.save_hyperparameters()
-        # Bookeeping results for plotting
+        # Bookkeeping results for plotting
         self.incumbent = None
         self.incumbent_error = None
         self.incumbent_trajectory = []

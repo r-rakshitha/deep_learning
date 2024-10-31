@@ -211,10 +211,10 @@ and their ratios based on  statistics from a large corpus.
 
 We can observe the following from :numref:`tab_glove`:
 
-* For a word $w_k$ that is related to "ice" but unrelated to "steam", such as $w_k=\textrm{solid}$, we expect a larger ratio of co-occurence probabilities, such as 8.9.
-* For a word $w_k$ that is related to "steam" but unrelated to "ice", such as $w_k=\textrm{gas}$, we expect a smaller ratio of co-occurence probabilities, such as 0.085.
-* For a word $w_k$ that is related to both "ice" and "steam", such as $w_k=\textrm{water}$, we expect a ratio of co-occurence probabilities that is close to 1, such as 1.36.
-* For a word $w_k$ that is unrelated to both "ice" and "steam", such as $w_k=\textrm{fashion}$, we expect a ratio of co-occurence probabilities that is close to 1, such as 0.96.
+* For a word $w_k$ that is related to "ice" but unrelated to "steam", such as $w_k=\textrm{solid}$, we expect a larger ratio of co-occurrence probabilities, such as 8.9.
+* For a word $w_k$ that is related to "steam" but unrelated to "ice", such as $w_k=\textrm{gas}$, we expect a smaller ratio of co-occurrence probabilities, such as 0.085.
+* For a word $w_k$ that is related to both "ice" and "steam", such as $w_k=\textrm{water}$, we expect a ratio of co-occurrence probabilities that is close to 1, such as 1.36.
+* For a word $w_k$ that is unrelated to both "ice" and "steam", such as $w_k=\textrm{fashion}$, we expect a ratio of co-occurrence probabilities that is close to 1, such as 0.96.
 
 
 

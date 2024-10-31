@@ -582,7 +582,7 @@ is similar to that in :numref:`sec_kaggle_house`.
 * We can read datasets containing raw image files after organizing them into the required format.
 
 :begin_tab:`mxnet`
-* We can use convolutional neural networks, image augmentation, and hybrid programing in an image classification competition.
+* We can use convolutional neural networks, image augmentation, and hybrid programming in an image classification competition.
 :end_tab:
 
 :begin_tab:`pytorch`
